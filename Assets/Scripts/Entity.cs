@@ -6,7 +6,8 @@ public class Entity : MonoBehaviour
 {
     // Start is called before the first frame update
     public Healthbar healthbar;
-    int HP;
+    public int HP;
+    int maxHP;
     int SPEED;
     int DEF;
     int ATK;
@@ -36,8 +37,16 @@ public class Entity : MonoBehaviour
     public void setDEF(int d) {
         DEF = d;
     }
+    public int getMaxHP() {
+        return maxHP;
+    }
+    public void setMaxHP(int mH) {
+        maxHP = mH;
+    }
     //Damage Function
     public void TakeDamage(int damage) {
+        //transform.position += -1 * transform.right * 2f;
+        GetComponent<Rigidbody2D>().velocity = -1 * transform.right * 10f;
         setHP(getHP()-damage);
         healthbar.setHealth(getHP());
     }

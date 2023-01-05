@@ -1,0 +1,16 @@
+{
+    "MonsterSet": [
+    {
+      "monster_count": "1",
+      "types": [1],
+      "locationsX": [-5],
+      "locationsY": [0]
+    },
+    {
+      "monster_count": "1",
+      "types": [2],
+      "locationsX": [-5],
+      "locationsY": [9]
+    }
+  ]
+}

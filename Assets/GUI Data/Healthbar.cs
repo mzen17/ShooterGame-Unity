@@ -15,7 +15,6 @@ public class Healthbar : MonoBehaviour
         FS.adjustColor();
     }
 
-    // Update is called once per frame
     public void setHealth(int setterValue) {
         GetComponent<Slider>().value = setterValue;        
         FS.adjustColor();

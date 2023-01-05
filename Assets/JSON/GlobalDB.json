@@ -1,0 +1,50 @@
+{
+"MonsterTypes": [
+  {
+  
+    "name" : "Attacker Melee",
+    "HP": 150,
+    "SPEED": 10,
+    "DEF" : 10,
+    "ATK" : 15,
+    "CD" : 1,
+    "RAD" : 20
+  },
+  {
+    "name" : "Attacker Ranged",
+    "HP": 100,
+    "SPEED": 10,
+    "DEF" : 10,
+    "ATK" : 30,
+    "CD" : 2,
+    "RAD" : 20
+  }
+],
+
+"Characters": [
+  {
+    "name" : "MC",
+    "HP" : 150,
+    "SPEED": 5,
+    "DEF" : 10,
+    "ATK" : 15,
+    "CD" : 2
+  },
+    {
+      "name" : "MFL",
+      "HP" : 70,
+      "SPEED": 8,
+      "DEF" : 5,
+      "ATK" : 20,
+      "CD" : 4
+    },
+    {
+      "name" : "SMC",
+      "HP" : 100,
+      "SPEED": 5,
+      "DEF" : 10,
+      "ATK" : 15,
+      "CD" : 2
+    }
+]
+}

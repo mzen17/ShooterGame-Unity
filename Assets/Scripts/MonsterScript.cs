@@ -1,54 +1,94 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
-public class MonsterScript : RangedUnit
+[System.Serializable]
+class monster{
+    string name;
+    public int HP;
+    public int SPEED;
+    public int DEF;
+    public int ATK;
+    public float CD;
+    public float RAD;
+}
+
+[System.Serializable]
+class MList{
+    public monster[] MonsterTypes;
+}
+
+
+
+
+
+public class MonsterScript : AttackerUnit
 { 
     [SerializeField] private LayerMask Player;
     float coolDown;
+    float timer;
+    float range;
+    Vector2 spawnLocation;
 
-    // Start is called before the first frame update
-    void Start() {
-    setSPEED(2);
-    setHP(100);
-    setATK(10);
-    setDEF(100);
-    coolDown = 0;
+    //Setting up monster
+     public void setUpMonster(int type) {
+        string path = Application.dataPath + "/JSON/GlobalDB.json";
+        if(File.Exists(path)) {
+            string jsonString = File.ReadAllText(path); 
+            MList M = JsonUtility.FromJson<MList>(jsonString);
+            setSPEED(M.MonsterTypes[type].SPEED);
+            setMaxHP(M.MonsterTypes[type].HP);
+            setHP(M.MonsterTypes[type].HP);
+            setATK(M.MonsterTypes[type].ATK);
+            setDEF(M.MonsterTypes[type].DEF);
+            range = M.MonsterTypes[type].RAD;
+            coolDown = M.MonsterTypes[type].CD;
+            spawnLocation = new Vector2(transform.position.x, transform.position.y);
+        }
+        healthbar.setMaxHealth(getMaxHP());
     }
 
-    Vector2 LookForBlood(int radius) {
-        Collider2D [] colliders = Physics2D.OverlapCircleAll(transform.position, 7f, Player);   
-            return new Vector2(colliders[0].gameObject.GetComponent<Transform>().position.x,colliders[0].gameObject.GetComponent<Transform>().position.y);
+    //Turns Entity to face player
+    public void LookForBlood(float radius) {
+        if(BloodScan(range)) {
+            Vector2 directPos = new Vector2(transform.position.x, transform.position.y);
+            Collider2D colliders = Physics2D.OverlapCircle(transform.position, radius, Player);   
+            Vector2 direction = new Vector2(colliders.gameObject.GetComponent<Transform>().position.x,colliders.gameObject.GetComponent<Transform>().position.y);
+            transform.right = direction - directPos;
+        }
     }
     
-    bool BloodScan(int radius) {
-         Collider2D [] colliders = Physics2D.OverlapCircleAll(transform.position, 7f, Player);
-        if(colliders.Length > 0)
+    //Detect if player is there
+    public bool BloodScan(float radius) {
+        Collider2D colliders = Physics2D.OverlapCircle(transform.position, 7f, Player);
+        if(colliders != null)
         {
             return true;
         }else{
             return false;
         }
     }
-    // Update is called once per frame
-    void Update()
-    {
 
-        Vector2 directPos = new Vector2(transform.position.x, transform.position.y);
+    //Calculations for the monster
+    public void exist() {
+        if(BloodScan(range)) {
+            LookForBlood(range);
 
-        if(BloodScan(7)) {
-        Vector2 direction = LookForBlood(7);
+            //if(BloodScan(2f) == false) {
+                GetComponent<Rigidbody2D>().AddForce(transform.right * getSPEED() * Time.deltaTime * 6000f);
+                //transform.position += transform.right * getSPEED() * Time.deltaTime;
+                Debug.Log(BloodScan(2f));
+            //}
 
-        transform.right = direction - directPos;
-        transform.position += transform.right * getSPEED() * Time.deltaTime;
-        if(coolDown <= 0) {
-        Fire();
-        coolDown = 3;
+            if(timer <= 0) {
+            Attack(gameObject);
+            timer = coolDown;
         }else{
-            coolDown -= Time.deltaTime;
+            timer -= Time.deltaTime;
         }
         }else if(coolDown > 0){
-            coolDown -= Time.deltaTime;
+            timer -= Time.deltaTime;
         }
         if(getHP() < 0) {
             Destroy(gameObject);
