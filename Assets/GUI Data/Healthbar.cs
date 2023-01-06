@@ -11,12 +11,19 @@ public class Healthbar : MonoBehaviour
     public void setMaxHealth(int setterValue)
     {
         GetComponent<Slider>().maxValue = setterValue;
-        GetComponent<Slider>().value = setterValue; 
         FS.adjustColor();
     }
 
     public void setHealth(int setterValue) {
         GetComponent<Slider>().value = setterValue;        
         FS.adjustColor();
+    }
+
+    public float getValue() {
+        return GetComponent<Slider>().value;
+    }
+
+    public float getMaxValue() {
+        return GetComponent<Slider>().maxValue;
     }
 }

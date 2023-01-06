@@ -20,19 +20,16 @@ class MList{
 }
 
 
-
-
-
-public class MonsterScript : AttackerUnit
-{ 
+public class MonsterScript : AttackerUnit { 
     [SerializeField] private LayerMask Player;
     float coolDown;
+    int chunkID;
     float timer;
     float range;
     Vector2 spawnLocation;
 
     //Setting up monster
-     public void setUpMonster(int type) {
+    public void setUpMonster(int type, int ChunkID) {
         string path = Application.dataPath + "/JSON/GlobalDB.json";
         if(File.Exists(path)) {
             string jsonString = File.ReadAllText(path); 
@@ -45,9 +42,12 @@ public class MonsterScript : AttackerUnit
             range = M.MonsterTypes[type].RAD;
             coolDown = M.MonsterTypes[type].CD;
             spawnLocation = new Vector2(transform.position.x, transform.position.y);
+            chunkID = ChunkID;
         }
         healthbar.setMaxHealth(getMaxHP());
-    }
+        healthbar.setHealth(getHP());
+
+        }
 
     //Turns Entity to face player
     public void LookForBlood(float radius) {
@@ -57,7 +57,7 @@ public class MonsterScript : AttackerUnit
             Vector2 direction = new Vector2(colliders.gameObject.GetComponent<Transform>().position.x,colliders.gameObject.GetComponent<Transform>().position.y);
             transform.right = direction - directPos;
         }
-    }
+        }
     
     //Detect if player is there
     public bool BloodScan(float radius) {
@@ -68,30 +68,30 @@ public class MonsterScript : AttackerUnit
         }else{
             return false;
         }
-    }
+        }
 
     //Calculations for the monster
     public void exist() {
+        if(GameController.running == 2) {
+            if(ChunkScript.loadedChunks.IndexOf(ChunkScript.chunks[chunkID-1]) == -1) {
+                Destroy(gameObject);
+            }
+        
+
         if(BloodScan(range)) {
             LookForBlood(range);
-
-            //if(BloodScan(2f) == false) {
-                GetComponent<Rigidbody2D>().AddForce(transform.right * getSPEED() * Time.deltaTime * 6000f);
-                //transform.position += transform.right * getSPEED() * Time.deltaTime;
-                Debug.Log(BloodScan(2f));
-            //}
-
+            GetComponent<Rigidbody2D>().AddForce(transform.right * getSPEED() * Time.deltaTime * 6000f);
             if(timer <= 0) {
-            Attack(gameObject);
-            timer = coolDown;
-        }else{
-            timer -= Time.deltaTime;
-        }
-        }else if(coolDown > 0){
-            timer -= Time.deltaTime;
-        }
-        if(getHP() < 0) {
-            Destroy(gameObject);
+                Attack(gameObject);
+                timer = coolDown;
+                }else if(coolDown > 0){
+                    timer -= Time.deltaTime;
+                }
+            if(getHP() < 0) {
+                Destroy(gameObject);
+                }
+            }
+            }
         }
     }
-}
+

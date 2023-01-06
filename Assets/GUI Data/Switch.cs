@@ -5,42 +5,41 @@ using UnityEngine.UI;
 
 public class Switch : MonoBehaviour
 {
-    public GameObject controller;
     public Sprite[] characterIcon;
 
     public GameObject control1;
     public GameObject control2;
+    public GameObject control3;
 
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    public void UpdateBar() {
+        if(PlayerController.ps.GetComponent<PlayerController>().team.Count >= 1) {
+            RectTransform c = control1.GetComponent<RectTransform>(); //Get this canvasbase
+            PlayerScript ps = PlayerController.ps.team[0].GetComponent<PlayerScript>();
 
-        if(controller.GetComponent<GameController>().inactivePlayers.Count >= 1) {
-            control1.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<Image>().sprite = characterIcon[controller.GetComponent<GameController>().inactivePlayers[0].GetComponent<PlayerScript>().playerID];
-            control1.GetComponent<RectTransform>().GetChild(1).gameObject.GetComponent<Healthbar>().setMaxHealth(controller.GetComponent<GameController>().inactivePlayers[0].GetComponent<PlayerScript>().getMaxHP());
-            control1.GetComponent<RectTransform>().GetChild(1).gameObject.GetComponent<Healthbar>().setHealth(controller.GetComponent<GameController>().inactivePlayers[0].GetComponent<PlayerScript>().getHP());
-
-            if(controller.GetComponent<GameController>().inactivePlayers[0].GetComponent<PlayerScript>().playerID == 0) 
-                control1.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "MC";
-            else if(controller.GetComponent<GameController>().inactivePlayers[0].GetComponent<PlayerScript>().playerID == 1)
-                control1.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "MFL";
-            else
-                control1.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "SMC";
+            c.GetChild(0).gameObject.GetComponent<Image>().sprite = characterIcon[ps.playerID];
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setMaxHealth(ps.getMaxHP());
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setHealth(ps.getHP());
+            c.GetChild(2).gameObject.GetComponent<Text>().text = ps.cname;
         }
+        if(PlayerController.ps.GetComponent<PlayerController>().team.Count >= 2) {
+            RectTransform c = control2.GetComponent<RectTransform>(); //Get this canvasbase
+            PlayerScript ps = PlayerController.ps.team[1].GetComponent<PlayerScript>();
 
-        if(controller.GetComponent<GameController>().inactivePlayers.Count >= 2) {
-            control2.GetComponent<RectTransform>().GetChild(0).gameObject.GetComponent<Image>().sprite = characterIcon[controller.GetComponent<GameController>().inactivePlayers[1].GetComponent<PlayerScript>().playerID];
-            control2.GetComponent<RectTransform>().GetChild(1).gameObject.GetComponent<Healthbar>().setMaxHealth(controller.GetComponent<GameController>().inactivePlayers[1].GetComponent<PlayerScript>().getMaxHP());
-            control2.GetComponent<RectTransform>().GetChild(1).gameObject.GetComponent<Healthbar>().setHealth(controller.GetComponent<GameController>().inactivePlayers[1].GetComponent<PlayerScript>().getHP());
+            c.GetChild(0).gameObject.GetComponent<Image>().sprite = characterIcon[ps.playerID];
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setMaxHealth(ps.getMaxHP());
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setHealth(ps.getHP());
+            c.GetChild(2).gameObject.GetComponent<Text>().text = ps.cname;
+        }
+        if(PlayerController.ps.GetComponent<PlayerController>().team.Count >= 3) {
+            RectTransform c = control3.GetComponent<RectTransform>(); //Get this canvasbase
+            PlayerScript ps = PlayerController.ps.team[2].GetComponent<PlayerScript>();
 
-            if(controller.GetComponent<GameController>().inactivePlayers[1].GetComponent<PlayerScript>().playerID == 0) 
-                control2.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "MC";
-            else if(controller.GetComponent<GameController>().inactivePlayers[1].GetComponent<PlayerScript>().playerID == 1)
-                control2.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "MFL";
-            else
-                control2.GetComponent<RectTransform>().GetChild(2).gameObject.GetComponent<Text>().text = "SMC";
+            c.GetChild(0).gameObject.GetComponent<Image>().sprite = characterIcon[ps.playerID];
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setMaxHealth(ps.getMaxHP());
+            c.GetChild(1).gameObject.GetComponent<Healthbar>().setHealth(ps.getHP());
+            c.GetChild(2).gameObject.GetComponent<Text>().text = ps.cname;
         }
     }
 }

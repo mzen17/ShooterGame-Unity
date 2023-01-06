@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System.IO;
 
+//ID 0 for MC
+//ID 1 for MFL
+//ID 2 for SMC
+
 [System.Serializable]
 class Character{
     public string name;
@@ -21,34 +25,41 @@ class CList{
 
 public class PlayerScript : AttackerUnit
 {
-    public int playerID;
     public string cname;
+    public bool a;
+    public int playerID;    
+
 
     //Load Stats
-    public void setUpPlayer() {
+    public void setUpPlayer(int ID, bool status) {
         string path = Application.dataPath + "/JSON/GlobalDB.json";
         if(File.Exists(path)) {
             string jsonString = File.ReadAllText(path); 
             CList M = JsonUtility.FromJson<CList>(jsonString);
-            setSPEED(M.Characters[playerID].SPEED);
-            setMaxHP(M.Characters[playerID].HP);
-            setHP(M.Characters[playerID].HP);
-            setATK(M.Characters[playerID].ATK);
-            setDEF(M.Characters[playerID].DEF);
-            cname = M.Characters[playerID].name;
-            healthbar.setMaxHealth(getHP());
+
+            setSPEED(M.Characters[ID].SPEED);
+            setMaxHP(M.Characters[ID].HP);
+            setHP(M.Characters[ID].HP);
+            setATK(M.Characters[ID].ATK);
+            setDEF(M.Characters[ID].DEF);
+            a = status;
+            cname = M.Characters[ID].name;
+            playerID = ID;
         }else{
             Debug.Log("GlobalDB.json does not exist");
         }
     }
 
+
+    //Change HP Bar on load
     public void LoadPlayer() {
         healthbar.setMaxHealth(getMaxHP());
         healthbar.setHealth(getHP());
     }
 
     //Updates
-    public void exist() {
+    private void Move() {
+        if(GameController.running >= 1) {
         //Movement Controls
 
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -61,12 +72,18 @@ public class PlayerScript : AttackerUnit
         Vector3 arrows = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
         //transform.position += (arrows*Time.deltaTime * getSPEED());
         GetComponent<Rigidbody2D>().AddForce(arrows*Time.deltaTime * getSPEED() * 4000);
+        }
+    }
 
-        //Combat Controls
-        if (Input.GetMouseButtonDown(0))
+    private void Attack() {
+          //Combat Controls
+        if (GameController.running == 2 && Input.GetMouseButtonDown(0))
             if (!EventSystem.current.IsPointerOverGameObject())
             Attack(gameObject);
+    }
 
-
+    void Update() {
+        Move();
+        Attack();
     }
 }

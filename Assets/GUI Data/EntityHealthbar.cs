@@ -7,7 +7,7 @@ public class EntityHealthbar : Healthbar
     // Update is called once per frame
     void Update()
     {
-        transform.localRotation = Quaternion.identity;
+       // transform.rotation = Quaternion.identity;
 
     }
 }
