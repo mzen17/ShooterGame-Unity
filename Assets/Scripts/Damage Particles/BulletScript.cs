@@ -14,11 +14,9 @@ public class BulletScript : DamageParticle
 
     //When crash
     public void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.GetComponent<Entity>() != null) {
-            if(collision.gameObject.name != launcher.name) {
+            if((collision.gameObject.GetComponent<Entity>() != null && launcher != null) &&collision.gameObject.name != launcher.name) {
                 Destroy(gameObject);
                 collision.gameObject.GetComponent<Entity>().TakeDamage(dmg);
-            }
         }else if(collision.gameObject.tag == "Obstacle (Stationary)") {
             Destroy(gameObject);
         }

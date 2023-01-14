@@ -27,11 +27,14 @@ public class PlayerScript : AttackerUnit
 {
     public string cname;
     public bool a;
-    public int playerID;    
+    public int playerID;  
+    public float timer;  
+    public float coolDown;
 
 
     //Load Stats
     public void setUpPlayer(int ID, bool status) {
+        timer = 0;
         string path = Application.dataPath + "/JSON/GlobalDB.json";
         if(File.Exists(path)) {
             string jsonString = File.ReadAllText(path); 
@@ -45,6 +48,7 @@ public class PlayerScript : AttackerUnit
             a = status;
             cname = M.Characters[ID].name;
             playerID = ID;
+            coolDown = M.Characters[ID].CD;
         }else{
             Debug.Log("GlobalDB.json does not exist");
         }
@@ -59,27 +63,40 @@ public class PlayerScript : AttackerUnit
 
     //Updates
     private void Move() {
-        if(GameController.running >= 1) {
+        if(GameController.running == 1 || GameController.running == 2) {
         //Movement Controls
 
         Vector2 direction = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 directPos = new Vector2(transform.position.x, transform.position.y);
-
+        
         transform.right = direction - directPos;
         //GetComponent<Rigidbody2D>().rotation = direction - directPos; //Rigid Body method
 
         
         Vector3 arrows = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0f);
         //transform.position += (arrows*Time.deltaTime * getSPEED());
+
+        if(GameController.running == 2)
         GetComponent<Rigidbody2D>().AddForce(arrows*Time.deltaTime * getSPEED() * 4000);
+        }else{
         }
     }
 
     private void Attack() {
           //Combat Controls
-        if (GameController.running == 2 && Input.GetMouseButtonDown(0))
-            if (!EventSystem.current.IsPointerOverGameObject())
-            Attack(gameObject);
+        if (GameController.running == 2 && Input.GetMouseButtonDown(0)) {
+            if (!EventSystem.current.IsPointerOverGameObject()) {
+                if(timer <= 0) {
+                        Attack(gameObject);
+                        timer = coolDown;
+                }
+            }
+        } else if(GameController.running == 2){
+            if(timer > 0) {
+                timer -= Time.deltaTime;
+            }
+        }
+
     }
 
     void Update() {

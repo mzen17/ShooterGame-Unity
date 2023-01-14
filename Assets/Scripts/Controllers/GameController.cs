@@ -7,7 +7,6 @@ public class GameController : MonoBehaviour
 {
 
     public ChunkScript ChunkLoader;
-    public GameObject mainMenuCanvas;
     public int currentIndex = 0;
     public Switch s;
     public int oldRun;
@@ -20,12 +19,15 @@ public class GameController : MonoBehaviour
 
         running = 2;
 
-        ChunkLoader.LoadChunk(PlayerController.ps.activeMember.transform.position.x, PlayerController.ps.activeMember.transform.position.x);
-        mainMenuCanvas.SetActive(false);
+
+        PlayerController.ps.AddPlayer(0);
+        PlayerController.ps.AddPlayer(1);
+        PlayerController.ps.AddPlayer(2);
+
     }
 
-    public void gameSet(int N) {
-        if(N>=0 && N<=2) {
+    public static void gameSet(int N) {
+        if(N>=0 && N<=3) {
             running = N;
         }
     }
@@ -37,15 +39,14 @@ public class GameController : MonoBehaviour
                 int tempRun = running;
                 gameSet((running == 0) ? oldRun : 0);
                 oldRun = tempRun;
-                Debug.Log("RUN: " + running);
 
                 if(running == 0) {
-                    mainMenuCanvas.SetActive(true);
+                    UIManager.ui.MainMenu(true);
                 }else{
-                    mainMenuCanvas.SetActive(false);
+                    UIManager.ui.MainMenu(false);
                 }
             }
-
+           ChunkLoader.LoadChunk(PlayerController.ps.activeMember.transform.position.x, PlayerController.ps.activeMember.transform.position.y);
             PlayerController.ps.updateStatus();
 
             s.UpdateBar();

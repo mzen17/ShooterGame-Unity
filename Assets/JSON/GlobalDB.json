@@ -3,48 +3,53 @@
   {
   
     "name" : "Attacker Melee",
-    "HP": 150,
-    "SPEED": 10,
+    "HP": 300,
+    "SPEED": 20,
     "DEF" : 10,
-    "ATK" : 15,
+    "ATK" : 25,
     "CD" : 1,
-    "RAD" : 20
+    "RAD" : 7,
+    "SR" : 2,
+    "ATKR" : 2
   },
   {
     "name" : "Attacker Ranged",
     "HP": 100,
-    "SPEED": 10,
+    "SPEED": 15,
     "DEF" : 10,
-    "ATK" : 30,
+    "ATK" : 60,
     "CD" : 2,
-    "RAD" : 20
+    "RAD" : 2,
+    "SR" : 7,
+    "ATKR" : 10
   }
+  
 ],
 
 "Characters": [
   {
     "name" : "MC",
     "HP" : 150,
-    "SPEED": 5,
+    "SPEED": 6,
     "DEF" : 10,
-    "ATK" : 15,
-    "CD" : 2
+    "ATK" : 30,
+    "CD" : 0.5
   },
     {
       "name" : "MF",
       "HP" : 70,
       "SPEED": 8,
       "DEF" : 5,
-      "ATK" : 20,
-      "CD" : 4
+      "ATK" : 45,
+      "CD" : 1
     },
     {
       "name" : "SMC",
       "HP" : 100,
-      "SPEED": 5,
+      "SPEED": 6,
       "DEF" : 10,
-      "ATK" : 15,
-      "CD" : 2
+      "ATK" : 35,
+      "CD" : 0.4
     }
 ]
 }

@@ -11,6 +11,7 @@ public class Entity : MonoBehaviour
     int SPEED;
     int DEF;
     int ATK;
+    bool canTakeDamage = true;
 
     // Update is called once per frame
     public int getSPEED() {
@@ -44,10 +45,15 @@ public class Entity : MonoBehaviour
         maxHP = mH;
     }
     //Damage Function
+    public void dmgState(bool state) {
+        canTakeDamage = state;
+    }
     public void TakeDamage(int damage) {
         //transform.position += -1 * transform.right * 2f;
+        if(canTakeDamage) {
         GetComponent<Rigidbody2D>().velocity = -1 * transform.right * 10f;
         setHP(getHP()-damage);
         healthbar.setHealth(getHP());
+        }
     }
 }

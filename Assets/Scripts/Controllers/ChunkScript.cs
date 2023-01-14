@@ -36,8 +36,11 @@ public class ChunkScript : MonoBehaviour {
     public static List<GameObject> chunks = new List<GameObject>();
     public static List<GameObject> loadedChunks = new List<GameObject>();
 
+    private ChunkList chunkList;
+
     //Spawn a monster with an ID of ID, at position (x,y), with type of typenum
     void SpawnMonster(int ID, float x, float y, int typeNum) {
+
         GameObject monsterInstance = (GameObject) Instantiate(monster[typeNum], new Vector3(x, y, 0), transform.rotation);
         monsterInstance.SetActive(true);
         monsterInstance.GetComponent<MonsterScript>().setUpMonster(typeNum, ID);
@@ -59,28 +62,39 @@ public class ChunkScript : MonoBehaviour {
         for(int i=0;i<cl.Length;i++) {
             chunks.Add(cl[i]);
         }
-    }
-    
 
-    public List<int> LoadChunk(float xPos, float yPos) {
-        List<int> chunksloaded = new List<int>();
         string path = Application.dataPath + "/JSON/ChunkData.json";
 
         if(File.Exists(path)) {
             string jsonString = File.ReadAllText(path);
 
-            ChunkList chunkList = JsonUtility.FromJson<ChunkList> (jsonString);
+        chunkList = JsonUtility.FromJson<ChunkList> (jsonString);
+        }
+    }    
+
+    public List<int> LoadChunk(float xPos, float yPos) {
+        List<int> chunksloaded = new List<int>();
             foreach(Chunk c in chunkList.Chunks){
-                if(c.b1X - renderDistance < xPos && c.b2X + renderDistance > xPos && c.b1Y - renderDistance< yPos && c.b2Y + renderDistance > yPos) {
+                if((c.b1X - renderDistance < xPos && c.b2X + renderDistance > xPos && c.b1Y - renderDistance< yPos && c.b2Y + renderDistance > yPos)) {
+                    if(!loadedChunks.Contains(chunks[c.ID-1])) {
+                    chunks[c.ID-1].SetActive(true);
                     loadedChunks.Add(chunks[c.ID-1]);
                     LoadMonsters(c.ID, c.MonsterSet);
+                    }
+
                 }else{
                     loadedChunks.Remove(chunks[c.ID-1]);
+                    chunks[c.ID-1].SetActive(false);
                 }       
          }
-        }
-
         return chunksloaded;
-    
     }
+    
+    
+
+    public void ManageChunks(float x, float y) {
+        LoadChunk(x,y);
+        
+        }
 }
+
