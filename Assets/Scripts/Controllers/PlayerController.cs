@@ -123,10 +123,7 @@ public class PlayerController : MonoBehaviour {
         
             maincam.transform.position = MainPos;
             
-            if(Input.GetKey(KeyCode.X)) {
-                RPGEngine.Engine.alert("Hello!");
-            }
-            
+
          }
     }
 

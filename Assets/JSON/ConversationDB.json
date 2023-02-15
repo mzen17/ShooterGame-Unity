@@ -1,0 +1,21 @@
+{
+    "ConversationMap" :[
+        {
+            "Object" : "Firework Box",
+            "Description" : "A firework box, created by PRYO WORKS.",
+            "Conversation" : ["Would you like to play with fireworks?", "Yes", "No"],
+            "ChainID" : ["APEX", "Would you like to play with fireworks?", "Would you like to play with fireworks?"],
+            "IDs" : [0, 1, 1],
+            "EndKeys" : ["Yes", "No"]
+        },
+        {
+            "Object" : "whale Box",
+            "Description" : "A firework box, created by PRYO WORKS.",
+            "Conversation" : ["Would you like to play with fireworks?", "Yes", "No"],
+            "ChainID" : ["APEX", "Would you like to play with fireworks?", "Would you like to play with fireworks?"],
+            "IDs" : [0, 1, 1],
+            "EndKeys" : ["Yes", "No"]
+        }
+    ]
+
+}

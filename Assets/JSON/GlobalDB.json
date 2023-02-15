@@ -28,7 +28,7 @@
 
 "Characters": [
   {
-    "name" : "MC",
+    "name" : "Akira",
     "HP" : 150,
     "SPEED": 6,
     "DEF" : 10,
@@ -36,7 +36,7 @@
     "CD" : 0.5
   },
     {
-      "name" : "MF",
+      "name" : "Yui",
       "HP" : 70,
       "SPEED": 8,
       "DEF" : 5,
@@ -44,7 +44,7 @@
       "CD" : 1
     },
     {
-      "name" : "SMC",
+      "name" : "Hajime",
       "HP" : 100,
       "SPEED": 6,
       "DEF" : 10,
