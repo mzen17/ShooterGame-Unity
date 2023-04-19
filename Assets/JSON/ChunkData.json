@@ -1,0 +1,25 @@
+{
+  "Chunks" : [
+      {
+        "ID" : 1,
+        "b1X" : -11,
+        "b1Y" : -15,
+        "b2X" : 22,
+        "b2Y" : 30,
+        "MonsterSet": [
+    {
+      "monster_count": "1",
+      "types": [1],
+      "locationsX": [-7],
+      "locationsY": [0]
+    },
+    {
+      "monster_count": "1",
+      "types": [2],
+      "locationsX": [-5],
+      "locationsY": [9]
+    }
+        ]
+      }
+  ]
+}

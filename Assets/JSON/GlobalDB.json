@@ -1,0 +1,55 @@
+{
+"MonsterTypes": [
+  {
+  
+    "name" : "Attacker Melee",
+    "HP": 300,
+    "SPEED": 20,
+    "DEF" : 10,
+    "ATK" : 25,
+    "CD" : 1,
+    "RAD" : 7,
+    "SR" : 2,
+    "ATKR" : 2
+  },
+  {
+    "name" : "Attacker Ranged",
+    "HP": 100,
+    "SPEED": 15,
+    "DEF" : 10,
+    "ATK" : 60,
+    "CD" : 2,
+    "RAD" : 2,
+    "SR" : 7,
+    "ATKR" : 10
+  }
+  
+],
+
+"Characters": [
+  {
+    "name" : "Akira",
+    "HP" : 150,
+    "SPEED": 6,
+    "DEF" : 10,
+    "ATK" : 30,
+    "CD" : 0.5
+  },
+    {
+      "name" : "Yui",
+      "HP" : 70,
+      "SPEED": 8,
+      "DEF" : 5,
+      "ATK" : 45,
+      "CD" : 1
+    },
+    {
+      "name" : "Hajime",
+      "HP" : 100,
+      "SPEED": 6,
+      "DEF" : 10,
+      "ATK" : 35,
+      "CD" : 0.4
+    }
+]
+}
