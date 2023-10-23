@@ -1,4 +1,4 @@
-# A-Chance-to-Light-This-World
+# Light the World
 Program Code (Unity) for this game.
 
-[CURRENTLY IS DEPRECATED IN FAVOR OF GODOT. No further developmenets will be made to this build because of a framework switch. Do not ask for this project to be rebuilted.]
+Currently deprecated because the art was not made (overdue) and because of port to 3D and Unreal Engine.
